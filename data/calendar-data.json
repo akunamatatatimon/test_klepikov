@@ -1,0 +1,37 @@
+{
+  "2025-06-01": {
+    "alcohol": 213,
+    "cigarettes": 321,
+    "sugar": 22
+  },
+  "2025-06-02": {
+    "alcohol": 333,
+    "cigarettes": 333,
+    "sugar": 333
+  },
+  "2025-06-04": {
+    "alcohol": 321,
+    "cigarettes": 22,
+    "sugar": 0
+  },
+  "2025-11-05": {
+    "alcohol": 30,
+    "cigarettes": 10,
+    "sugar": 20
+  },
+  "2025-11-13": {
+    "alcohol": 20,
+    "cigarettes": 30,
+    "sugar": 50
+  },
+  "2025-11-12": {
+    "alcohol": 2,
+    "cigarettes": 1,
+    "sugar": 9
+  },
+  "2025-12-11": {
+    "alcohol": 50,
+    "cigarettes": 3,
+    "sugar": 16
+  }
+}

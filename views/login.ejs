@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/styles/main.css">
+    <title>Вход для сотрудников</title>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Страница входа для сотрудника</h2>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label>Логин</label>
+                <input type="email" placeholder="mail@mail.com" required>
+            </div>
+            
+            <div class="input-group">
+                <label>Пароль</label>
+                <input type="password" placeholder="***********" required>
+            </div>
+            
+            <div class="code-info">
+                <p>Код для подтверждения входа был отправлен на вашу почту</p>
+                <a href="#" class="resend">Отправить код повторно</a>
+            </div>
+            
+            <button type="submit" class="login-btn">Войти</button>
+        </form>
+    </div>
+</body>
+</html>

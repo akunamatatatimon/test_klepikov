@@ -1,0 +1,53 @@
+[
+  {
+    "id": 7,
+    "name": "Кот",
+    "species": "Кошка",
+    "birthDate": "12.02.2021",
+    "hasMark": false,
+    "vaccinated": true,
+    "ectoparasiteTreatment": false,
+    "deworming": true,
+    "sterilized": false,
+    "documents": [
+      {
+        "filename": "749ab591-802b-4512-8c0a-c20520301dc7.jpg",
+        "path": "8cdcf521-7f65-40c4-bde2-71b80bd7840a.jpg",
+        "date": "10.12.2025"
+      },
+      {
+        "filename": "417eb14e-8111-4dbe-ab1f-fc388a427787.jpg",
+        "path": "dd0c913f-2472-4db1-9c55-5cd6476d9793.jpg",
+        "date": "10.12.2025"
+      },
+      {
+        "filename": "11bba63c-3903-4be5-979e-35907b042e15.jpg",
+        "path": "80197bcf-860a-4d22-9c25-51ef01fedccc.jpg",
+        "date": "10.12.2025"
+      },
+      {
+        "filename": "фыв.jpg",
+        "path": "66297390-50c7-4404-8070-e3d8899cbcdf.jpg",
+        "date": "10.12.2025"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Отар",
+    "species": "Собака",
+    "birthDate": "12.12.2012",
+    "hasMark": false,
+    "vaccinated": false,
+    "ectoparasiteTreatment": true,
+    "deworming": true,
+    "sterilized": false,
+    "documents": [
+      {
+        "filename": "Лабораторная работа 7. Создание ленты времени.pdf",
+        "path": "44ebb6bf-e51a-4ee1-b5de-375b7990393c.pdf",
+        "date": "17.12.2025"
+      }
+    ]
+  }
+]

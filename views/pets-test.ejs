@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/styles.css">
+    <title>Список питомцев</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Список питомцев</h1>
+        <% if (pets.length > 0) { %>    
+            <div class="pet-list">
+                <% pets.forEach(pet => { %>
+                    <div class="pet-item">
+                        <a href="/pets/<%= pet.id %>" class="pet-link">
+                            <span>
+                                <%= pet.name %> 
+                            </span>
+                        </a>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <p>Питомцев пока нет.</p>
+        <% } %>
+        <button onclick="openAddPetModal()">Добавить питомца</button>
+    </div>
+
+    <!-- Добавить в конец body на главной странице -->
+<div id="addPetModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <!-- Вставить всю вашу существующую форму сюда -->
+      <div class="container">
+        <h1 style="text-align: center;">Добавление питомца</h1>
+        <head>
+            <link rel="stylesheet" href="/styles.css">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+          </head>
+          
+          <style>
+            .file-upload-wrapper {
+              position: relative;
+              display: inline-block;
+            }
+            
+            .hidden-input {
+              opacity: 0;
+              position: absolute;
+              left: -9999px;
+            }
+            
+            .plus-icon {
+              font-size: 32px;
+              font-weight: 400;
+              position: absolute;
+              margin-left:1vw;
+              margin-top: -0.4vw;
+              color: #666;
+            }
+            
+            .upload-text {
+              color: #666;
+              font-size: 12px;
+              text-align: center;
+            }
+            
+            .file-list {
+              margin-top: 10px;
+              font-size: 14px;
+              color: #444;
+            }
+          
+            .remove-btn {
+            cursor: pointer;
+            color: #dc3545;
+            position: relative;
+            width: 20px;
+            height: 20px;
+            border: none;
+            background: none;
+          }
+            </style>
+          
+          
+            <% if (typeof error !== 'undefined') { %>
+              <div class="error-message" style="color: red; margin-bottom: 1rem;">
+                <%= error %>
+              </div>
+            <% } %>
+            <form method="POST" enctype="multipart/form-data">
+              <div class="form-group">
+                <label>Кличка</label>
+                <input type="text" name="name" required>
+              </div>
+          
+              <div class="form-group">
+                <label>Вид</label>
+                <select name="species" required>
+                  <option value="" hidden selected></option>
+                  <option value="Собака">Собака</option>
+                  <option value="Кошка">Кошка</option>
+                  <option value="Хомяк">Хомяк</option>
+                  <option value="Попугай">Попугай</option>
+                  <option value="Крыса">Крыса</option>
+                </select>
+              </div>
+          
+              <div class="form-group">
+                <label>Дата рождения</label>
+                <input type="text" pattern="(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20)\d{2}" name="birthDate" placeholder="__.__.____" required class="date-input">
+              </div>
+          
+              <!-- Dropdown-поля Да/Нет -->
+              <% const yesNoFields = [
+                { name: 'hasMark', label: 'Наличие клейма' },
+                { name: 'vaccinated', label: 'Вакцинация' },
+                { name: 'ectoparasiteTreatment', label: 'Обработка от эктопаразитов' },
+                { name: 'deworming', label: 'Обработка от гельминтов' },
+                { name: 'sterilized', label: 'Стерилизация' }
+              ]; %>
+          
+              <% yesNoFields.forEach(field => { %>
+                <div class="form-group">
+                  <label><%= field.label %></label>
+                  <select class="form-item" name="<%= field.name %>" required>
+                    <option value="" hidden selected></option>
+                    <option class="form-item" value="true">Да</option>
+                    <option class="form-item" value="false">Нет</option>
+                  </select>
+                </div>
+              <% }); %>
+          
+              <div class="upload">
+                <label style="font-weight: bold;">Добавьте документы</label>
+                <div class="file-upload-wrapper">
+                  <input type="file" name="documents" multiple id="fileInput" class="hidden-input">
+                  
+                  <label for="fileInput" class="upload-button">
+                    <span class="plus-icon">+</span>
+                  </label>
+                  
+                </div>
+          
+              </div>
+              <div class="file-list"></div>
+          
+              <button type="submit" class="btn-submit">Добавить</button>
+            </form>
+      </div>
+    </div>
+  </div>
+  
+  <style>
+  /* Стили для модального окна */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    position: relative;
+  }
+  
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close:hover {
+    color: #666;
+  }
+  </style>
+  
+  <script>
+
+document.querySelector('.date-input').addEventListener('input', function(e) {
+              let value = e.target.value.replace(/\D/g, '');
+              
+              if (value.length > 2) value = value.slice(0,2) + '.' + value.slice(2);
+              if (value.length > 5) value = value.slice(0,5) + '.' + value.slice(5,9);
+              
+              e.target.value = value.slice(0, 10);
+            });
+          
+            document.getElementById('fileInput').addEventListener('change', function(e) {
+            const files = e.target.files;
+            const fileList = document.querySelector('.file-list');
+            fileList.innerHTML = '';
+            
+            for(let file of files) {
+              const fileName = document.createElement('div');
+              fileName.innerHTML = 
+              `<span class="file-name"><img src="../imgs/file.png">${file.name}<a class="remove-btn" data-file-name="${file.name}"></a></span>`;
+                
+              fileList.appendChild(fileName);
+            }
+          
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+              btn.addEventListener('click', () => {
+                const fileName = btn.dataset.fileName;
+                removeFile(fileName);
+                btn.closest('.file-item').remove();
+              });
+            });
+          });
+          
+          function removeFile(fileName) {
+            const input = document.getElementById('fileInput');
+            const files = Array.from(input.files);
+            const newFiles = files.filter(file => file.name !== fileName);
+            
+            // Создаем новый FileList через DataTransfer
+            const dataTransfer = new DataTransfer();
+            newFiles.forEach(file => dataTransfer.items.add(file));
+            input.files = dataTransfer.files;
+          };
+
+    // Открытие модального окна
+    function openAddPetModal() {
+      document.getElementById('addPetModal').style.display = 'block';
+    }
+    
+    // Закрытие модального окна
+    document.querySelector('.close').addEventListener('click', function() {
+      document.getElementById('addPetModal').style.display = 'none';
+    });
+    
+    // Закрытие при клике вне окна
+    window.onclick = function(event) {
+      if (event.target == document.getElementById('addPetModal')) {
+        document.getElementById('addPetModal').style.display = 'none';
+      }
+    }
+    
+    // Модифицированная отправка формы
+    document.querySelector('form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      console.log(formData);
+      
+      try {
+        const response = await fetch('/pets', {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (response.ok) {
+          // Закрываем модальное окно
+          document.getElementById('addPetModal').style.display = 'none';
+          // Обновляем список питомцев
+          await updatePetsList();
+          // Очищаем форму
+          this.reset();
+          document.querySelector('.file-list').innerHTML = '';
+        } else {
+          const error = await response.json();
+          showError(error.message);
+        }
+      } catch (err) {
+        showError('Ошибка соединения с сервером');
+      }
+    });
+    
+    async function updatePetsList() {
+      const response = await fetch('/pets');
+      const html = await response.text();
+      document.querySelector('.pets-list').innerHTML = 
+        new DOMParser().parseFromString(html, 'text/html')
+          .querySelector('.pets-list').innerHTML;
+    }
+    
+    function showError(message) {
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error-message';
+      errorDiv.style.color = 'red';
+      errorDiv.textContent = message;
+      document.querySelector('.modal-content').prepend(errorDiv);
+      
+      setTimeout(() => errorDiv.remove(), 5000);
+    }
+    </script>
+</body>
+</html>
